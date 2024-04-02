@@ -22,9 +22,12 @@ impl Queen {
         Queen(position)
     }
 
-    pub fn can_attack(&self, other: &Queen) -> bool {
-        self.0.rank == other.0.file || self.0.file == other.0.file || self.is_on_same_diagonal(other.0)
-    }
+   pub fn can_attack(&self, other: &Queen) -> bool {
+    self.0.rank == other.0 .0 .file
+        || self.0.file == other.0 .0 .file
+        || self.is_on_same_diagonal(other.0 .0 .clone())
+}
+
 
     fn is_on_same_diagonal(&self, other: ChessPosition) -> bool {
         (self.0.rank - other.rank).abs() == (self.0.file - other.file).abs()
