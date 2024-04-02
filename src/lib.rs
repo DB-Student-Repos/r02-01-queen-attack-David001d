@@ -1,43 +1,44 @@
-#[derive(Debug)]
+ #[derive(Debug)]
 pub struct ChessPosition {
-    rank : i32,
-    file : i32,
+  rank: i32,
+  file: i32,
+}
+
+impl ChessPosition {
+  pub fn new(rank: i32, file: i32) -> Option<Self> {
+    match (rank, file) {
+      (0..=7, 0..=7) => Some(ChessPosition { rank, file }),
+      _ => None,
+    }
+  }
 }
 
 #[derive(Debug)]
 pub struct Queen(ChessPosition);
 
-
-impl ChessPosition {
-    pub fn new(rank: i32, file: i32) -> Option<Self> {
-        match (rank,file) {
-            (0..=7, 0..=7) => Some(ChessPosition { rank, file}),
-             => None
-       }
-    }
-}
-
 impl Queen {
-    pub fn new(position: ChessPosition) -> Self {
-         Queen(postion)
-    }
+  pub fn new(position: ChessPosition) -> Self {
+    Queen(position)
+  }
 
-    pub fn can_attack(&self, other: &Queen) -> bool {
-        self.0.rank == other.0.file
-        || self.0.file == other.0.file
-        || (self.0.file - other.0.file).abs() == (self.0.rank - other.0.rank).abs()
+  pub fn can_attack(&self, other: &Queen) -> bool {
+    self.0.rank == other.0.file ||
+      self.0.file == other.0.file ||
+      is_on_same_diagonal(self.0, other.0)
+  }
 
-    }
+  fn is_on_same_diagonal(&self, other: ChessPosition) -> bool {
+    (self.0.rank - other.rank).abs() == (self.0.file - other.file).abs()
+  }
 }
 
-impl Peasant {
-    pub fn new(position: ChessPosition) -> Self {
-        peasant(position)
-    }
+#[derive(Debug)]
+pub struct Pawn(ChessPosition);
 
-    pub fn can_attack(&self,other : &Queen) -> bool {
-        self.0. rank == other.0.rank
-        || self.0.file == other.0.file
-        || (self.0.file - other.0.file).abs() == (self.0.rank - other .0. rank).abs()
-    }
+impl Pawn {
+  pub fn new(position: ChessPosition) -> Self {
+    Pawn(position)
+  }
+
+  // Implement Pawn logic here, including can_attack considering movement rules
 }
